@@ -22,7 +22,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 
 	/*
 	 * registrazione di un nuovo amministratore.
-	 * Se già presente si solleva una eccezione
+	 * Se giï¿½ presente si solleva una eccezione
 	 */
 	@Override
 	public void insert(Utente amministratore) throws SQLException{
@@ -64,9 +64,9 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 
 	/*
 	 * cancellazione di un amministratore individuato attraverso il suo idAmministratore.
-	 * l'amministratore potrà essere cancellato solo se non legato a nessun altro dato presente sul DB
+	 * l'amministratore potrï¿½ essere cancellato solo se non legato a nessun altro dato presente sul DB
 	 * Se non esiste viene sollevata una eccezione
-	 * Se non è cancellabile si solleva una eccezione
+	 * Se non ï¿½ cancellabile si solleva una eccezione
 	 */
 	@Override
 	public void delete(String idAmministratore) throws SQLException{
@@ -134,15 +134,5 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		}
 		else
 			throw new SQLException("amministratore: " + idAmministratore + " non presente");
-	}
-	
-	public static void main(String[] args) throws Exception{
-		AmministratoreDAO dao= new AmministratoreDAOImpl();
-		Utente u = new Utente("aa","aa","aa","aa", new java.util.Date(),"pp","pp", true);
-//		dao.insert(u);
-//		u.setCognome("Doria");
-//		dao.delete("aa");
-//		dao.update(u);
-		System.out.println(dao.select("marco81"));
 	}
 }
