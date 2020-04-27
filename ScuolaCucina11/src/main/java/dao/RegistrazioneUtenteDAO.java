@@ -13,5 +13,4 @@ public interface RegistrazioneUtenteDAO extends Closeable {
 	void delete(Utente u) throws SQLException;
 	ArrayList<Utente> select() throws SQLException;
 	Utente select(Utente u) throws SQLException;
-
 }
