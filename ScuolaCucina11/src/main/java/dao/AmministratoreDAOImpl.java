@@ -37,6 +37,8 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		ps.setString(6, amministratore.getEmail());
 		ps.setString(7, amministratore.getTelefono());
 		ps.executeUpdate();
+		
+		// handle exc
 	}
 
 
@@ -105,6 +107,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		}
 
 		return amministratori;
+		// handle exc
 	}
 
 
@@ -136,21 +139,13 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		else
 			throw new SQLException("amministratore: " + idAmministratore + " non presente");
 	}
-	
-	public static void main(String[] args) throws Exception{
-		AmministratoreDAO dao = new AmministratoreDAOImpl();
-		Utente u = new Utente("aa","aa","aa","aa", new java.util.Date(),"pp","pp", true);
-//		dao.insert(u);
-//		u.setCognome("Doria");
-//		dao.delete("aa");
-//		dao.update(u);
-		System.out.println(dao.select("marco81"));
-	}
-
 
 	@Override
 	public void close() throws IOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			conn.close();
+		} catch (SQLException se) {
+			throw new IllegalStateException("Failed to close connection" + se.getMessage());
+		}
 	}
 }
