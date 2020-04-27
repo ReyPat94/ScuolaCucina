@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -135,5 +136,22 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		}
 		else
 			throw new SQLException("amministratore: " + idAmministratore + " non presente");
+	}
+	
+	public static void main(String[] args) throws Exception{
+		AmministratoreDAO dao= new AmministratoreDAOImpl();
+		Utente u = new Utente("aa","aa","aa","aa", new java.util.Date(),"pp","pp", true);
+//		dao.insert(u);
+//		u.setCognome("Doria");
+//		dao.delete("aa");
+//		dao.update(u);
+		System.out.println(dao.select("marco81"));
+	}
+
+
+	@Override
+	public void close() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 }
