@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import entity.Categoria;
 
 
-public interface CategoriaDAO {
+public interface CategoriaDAO extends AutoCloseable {
 	void insert(String descrizione) throws SQLException;
 	void update(Categoria c) throws SQLException;
 	void delete(int idCategoria) throws SQLException;

@@ -47,7 +47,7 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 	@Override
 	public void update(Corso corso) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement(
-				"UPDATE INTO catalogo(titolo, id_categoria, numeroMaxPartecipanti, costo, descrizione) values( ?, ?, ?, ?, ?) WHERE id_corso = ?");
+				"UPDATE catalogo SET titolo = ?, id_categoria = ?,  numeroMaxPartecipanti = ?,  costo = ?,  descrizione = ? WHERE id_corso = ?");
 		ArrayList<Corso> allcourses = select();
 		if (allcourses.contains(corso)) {
 			stmt.setInt(6, corso.getCodice());
