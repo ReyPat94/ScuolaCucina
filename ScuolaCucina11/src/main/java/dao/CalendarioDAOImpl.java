@@ -15,6 +15,7 @@ import exceptions.ConnessioneException;
 public class CalendarioDAOImpl implements CalendarioDAO {
 
 	private Connection conn;
+	private static final String GET_EDIZIONI_CORSO = "select * from calendario, catalogo where calendario.id_corso = catalogo.id_corso and id_corso=?";
 
 	public CalendarioDAOImpl() throws ConnessioneException{
 		conn = SingletonConnection.getInstance();
@@ -118,6 +119,38 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 			return edizioni;
 
 	}
+	
+	public ArrayList<Edizione> selectByCorso(int idCorso) throws SQLException {
+		ArrayList<Edizione> edizioni=new ArrayList<Edizione>(); 
+		PreparedStatement ps=conn.prepareStatement(GET_EDIZIONI_CORSO);
+													//questa è una join scritta brutta, c'era già
+		ps.setInt(1, idCorso);
+		ResultSet rs=ps.executeQuery();
+		while(rs.next()){
+			int idEdizione=rs.getInt("id_Edizione");
+			Date dataInizio=rs.getDate("dataInizio");
+			int durata=rs.getInt("durata");
+			String aula=rs.getString("aula");
+			String docente=rs.getString("docente");
+
+			Edizione e=new Edizione(idCorso,dataInizio,durata,aula,docente);
+			e.setCodice(idEdizione);
+
+			long dataM = dataInizio.getTime();				  //brutto
+			long durataM= durata*86400000L;
+			Date dataFine = new Date(dataM+durataM);
+		
+
+			if (dataFine.before(new java.util.Date()))        //controlla se l'edizione è conclusa
+				e.setTerminata(true);	
+
+			edizioni.add(e);
+
+		}
+
+		return edizioni;
+
+}	
 
 
 	/*

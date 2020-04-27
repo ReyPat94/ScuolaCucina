@@ -3,13 +3,23 @@ package service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import dao.CalendarioDAO;
+import dao.CalendarioDAOImpl;
 import dao.CatalogoDAO;
 import dao.CatalogoDAOImpl;
 import dao.CategoriaDAO;
+import dao.CategoriaDAOImpl;
+import dao.FeedBackDAOImpl;
+import dao.FeedbackDAO;
+import dao.IscrizioneUtenteDAO;
+import dao.IscrizioneUtenteDAOImpl;
 import dto.CorsoDTO;
+import dto.EdizioneDTO;
 import entity.Categoria;
 import entity.Corso;
+import entity.Edizione;
 import entity.Feedback;
+import entity.Utente;
 import exceptions.ConnessioneException;
 import exceptions.DAOException;
 
@@ -18,12 +28,20 @@ public class CorsoServiceImpl implements CorsoService {
 	// dichiarare qui tutti i dao di cui si ha bisogno
 	private CatalogoDAO daoC;
 	private CategoriaDAO daoCat;
+	private CalendarioDAO daoCal;	
+	private FeedbackDAO daoF;
+	private IscrizioneUtenteDAO daoI;
 
 	// ... dichiarazione di altri DAO
 
 	// costruire qui tutti i dao di cui si ha bisogno
 	public CorsoServiceImpl() throws ConnessioneException {
 		daoC = new CatalogoDAOImpl();
+		daoF = new FeedBackDAOImpl();
+		daoCat = new CategoriaDAOImpl();
+		daoCal = new CalendarioDAOImpl();
+		daoI = new IscrizioneUtenteDAOImpl();
+		
 		// ... costruzione dei altri dao
 	}
 
@@ -80,8 +98,13 @@ public class CorsoServiceImpl implements CorsoService {
 	 * tornare una DAOException con all'interno l'exception originale
 	 */
 	@Override
-	public void creaNuovaCategoria(String descrizione) {
-		// TODO Auto-generated method stub
+	public void creaNuovaCategoria(String descrizione) throws DAOException {
+		try {
+			daoCat.insert(descrizione);
+		} catch (SQLException e) {
+			throw new DAOException("Errore nell'inserire i dati", e);
+		}
+		return;
 
 	}
 
@@ -94,8 +117,26 @@ public class CorsoServiceImpl implements CorsoService {
 	 */
 	@Override
 	public CorsoDTO visualizzaSchedaCorso(int idCorso) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Feedback> feedbacks;
+		ArrayList<Utente> utentiEdizione;
+		ArrayList<EdizioneDTO> edizioniDTO = new ArrayList<>();
+		Corso corso = new Corso();
+		CorsoDTO corsoDTO;
+		try {
+			corso = daoC.select(idCorso);
+			ArrayList<Edizione> edizioni = daoCal.selectByCorso(idCorso);
+			
+			for (int i=0; i < edizioni.size(); i++) {
+				feedbacks = daoF.selectPerEdizione(edizioni.get(i).getCodice());
+				utentiEdizione = daoI.selectUtentiPerEdizione(edizioni.get(i).getCodice());
+				edizioniDTO.add(new EdizioneDTO(edizioni.get(i), feedbacks, utentiEdizione));
+			}
+			corsoDTO = new CorsoDTO(corso, edizioniDTO);
+
+		} catch (SQLException e) {
+			throw new DAOException("Errore nell'inserire i dati", e);
+		}
+		return corsoDTO;
 	}
 
 	/*
@@ -107,8 +148,14 @@ public class CorsoServiceImpl implements CorsoService {
 	 */
 	@Override
 	public ArrayList<Feedback> visualizzaFeedbackCorso(int idCorso) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Feedback> feedbacks = new ArrayList<>();
+		
+		try {
+			feedbacks = daoF.selectFeedbackPerCorso(idCorso);
+		} catch (SQLException e) {
+			throw new DAOException("Errore nel recuperare o leggere i dati", e);
+		}
+		return feedbacks;
 	}
 
 	/*
@@ -118,8 +165,12 @@ public class CorsoServiceImpl implements CorsoService {
 	 */
 	@Override
 	public void modificaDatiCorso(Corso corso) throws DAOException {
-		// TODO Auto-generated method stub
-
+		try {
+			daoC.update(corso);
+		} catch (SQLException e) {
+			throw new DAOException("Errore nell'aggiornare i dati", e);
+		}
+		return;
 	}
 
 	/*
@@ -129,9 +180,14 @@ public class CorsoServiceImpl implements CorsoService {
 	 */
 	@Override
 	public void inserisciCorso(Corso corso) throws DAOException {
-		// TODO Auto-generated method stub
-
+		try {
+			daoC.insert(corso);
+		} catch (SQLException e) {
+			throw new DAOException("Errore nell'inserire dati", e);
+		}
+		return;
 	}
+	
 
 	/*
 	 * cancella un singolo corso dal catalogo dei corsi se il metodi del/dei DAO
@@ -140,8 +196,12 @@ public class CorsoServiceImpl implements CorsoService {
 	 */
 	@Override
 	public void cancellaCorso(int codiceCorso) throws DAOException {
-		// TODO Auto-generated method stub
-
+		try {
+			daoC.delete(codiceCorso);
+		} catch (Exception e) {
+			throw new DAOException("Errore nell'inserire i dati nel database", e);
+		}
+		return;
 	}
 
 	/*
@@ -151,8 +211,13 @@ public class CorsoServiceImpl implements CorsoService {
 	 */
 	@Override
 	public Corso visualizzaCorso(int codiceCorso) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		Corso corso;
+		try {
+			corso = daoC.select(codiceCorso);
+		} catch (Exception e) {
+			throw new DAOException("Errore nell'inserire i dati nel database", e);
+		}
+		return corso;
 	}
 
 }
