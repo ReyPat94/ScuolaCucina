@@ -16,6 +16,9 @@ import exceptions.ConnessioneException;
 
 public class CatalogoDAOImpl implements CatalogoDAO {
 
+	private static final String GET_CORSI_CATEGORIA = "SELECT id_corso, titolo, id_categoria, numeroMaxPartecipanti, costo, descrizione "
+			+ "FROM catalogo JOIN categoria USING(id_categoria) WHERE id_corso = ?";
+
 	private Connection conn;
 
 	public CatalogoDAOImpl() throws ConnessioneException {
@@ -117,6 +120,20 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 		} else {
 			throw new SQLException("The course with the ID provided doesn't exist");
 		}
+	}
+
+	@Override
+	public ArrayList<Corso> getCorsiCategoria(int idCategoria) throws SQLException {
+		PreparedStatement pstmt = conn.prepareStatement(GET_CORSI_CATEGORIA);
+		pstmt.setInt(1, idCategoria);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Corso> result = new ArrayList<>();
+		while (rs.next()) {
+			Corso corso = new Corso(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5),
+					rs.getString(6));
+			result.add(corso);
+		}
+		return result;
 	}
 
 	@Override
