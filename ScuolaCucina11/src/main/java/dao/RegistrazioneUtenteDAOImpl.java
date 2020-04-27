@@ -30,6 +30,7 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 		conn = SingletonConnection.getInstance();
 	}
 
+	
 	/*
 	 * registrazione di un nuovo utente alla scuola di formazione se l'utente gi�
 	 * esiste si solleva una eccezione
