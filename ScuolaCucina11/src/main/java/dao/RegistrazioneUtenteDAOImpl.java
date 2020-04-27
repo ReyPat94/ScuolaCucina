@@ -108,8 +108,8 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 	 * metodo ritorna una lista vuota
 	 */
 	@Override
-	public List<Utente> select() throws SQLException {
-		List<Utente> results = new ArrayList<>();
+	public ArrayList<Utente> select() throws SQLException {
+		ArrayList<Utente> results = new ArrayList<>();
 
 		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(GET_ALL)) {
 			while (rs.next()) {
