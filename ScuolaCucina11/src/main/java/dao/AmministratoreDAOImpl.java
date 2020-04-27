@@ -38,6 +38,8 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		ps.setString(6, amministratore.getEmail());
 		ps.setString(7, amministratore.getTelefono());
 		ps.executeUpdate();
+		
+		// handle exc
 	}
 
 
@@ -105,6 +107,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		}
 
 		return amministratori;
+		// handle exc
 	}
 
 
@@ -140,6 +143,10 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 
 	@Override
 	public void close() throws IOException {
-		// TODO Auto-generated method stub
+		try {
+			conn.close();
+		} catch (SQLException se) {
+			throw new IllegalStateException("Failed to close connection" + se.getMessage());
+		}
 	}
 }
