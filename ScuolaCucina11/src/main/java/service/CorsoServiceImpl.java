@@ -87,18 +87,11 @@ public class CorsoServiceImpl implements CorsoService {
 	}
 
 	/*
-<<<<<<< HEAD
 	 * ritorna un oggetto CorsoDTO con tutti i dati di un singolo corso tutte le
 	 * edizioni di quel corso con relativi feedbacks (classe EdizioneDTO) il corso �
 	 * individuato tramite idCorso se il metodi del/dei DAO invocati sollevano una
 	 * eccezione, il metodo deve tornare una DAOException con all'interno
 	 * l'exception originale
-=======
-	 * ritorna un oggetto CorsoDTO con tutti i dati di un singolo corso 
-	 * tutte le edizioni di quel corso con relativi feedbacks (classe EdizioneDTO)
-	 * il corso � individuato tramite idCorso
-	 * se il metodi del/dei DAO invocati sollevano una eccezione, il metodo deve tornare una DAOException con all'interno l'exception originale
->>>>>>> branch 'master' of https://github.com/ReyPat94/ScuolaCucina.git
 	 */
 	@Override
 	public CorsoDTO visualizzaSchedaCorso(int idCorso) throws DAOException {
@@ -107,16 +100,11 @@ public class CorsoServiceImpl implements CorsoService {
 	}
 
 	/*
-<<<<<<< HEAD
 	 * ritorna una lista con tutti i feedbacks relativi ad un corso il corso �
 	 * individuato tramite idCorso se il metodi del/dei DAO invocati sollevano una
 	 * eccezione, il metodo deve tornare una DAOException con all'interno
 	 * l'exception originale
-=======
-	 * ritorna una lista con tutti i feedbacks relativi ad un corso 
-	 * il corso � individuato tramite idCorso
-	 * se il metodi del/dei DAO invocati sollevano una eccezione, il metodo deve tornare una DAOException con all'interno l'exception originale
->>>>>>> branch 'master' of https://github.com/ReyPat94/ScuolaCucina.git
+
 	 */
 	@Override
 	public ArrayList<Feedback> visualizzaFeedbackCorso(int idCorso) throws DAOException {
