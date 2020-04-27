@@ -83,7 +83,6 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 			stmt_delete.setInt(1, idCorso);
 			stmt_delete.executeUpdate();
 		}
-
 	}
 
 	/*
