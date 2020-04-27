@@ -3,11 +3,13 @@ package dao;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entity.Categoria;
 import entity.Corso;
+import entity.Edizione;
 import entity.Feedback;
 import exceptions.ConnessioneException;
 
@@ -44,7 +46,7 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 	public void update(Corso corso) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement(
 				"UPDATE into catalogo(titolo, id_categoria, numeroMaxPartecipanti, costo, descrizione) values( ?, ?, ?, ?, ?) WHERE id_corso = ?");
-		ArrayList<Corso> allcourses = select();   //select to implement
+		ArrayList<Corso> allcourses = select();   //select() to be implement
 		if (allcourses.contains(corso)) {
 			stmt.setInt(6, corso.getCodice());
 			stmt.setString(1, corso.getTitolo());
@@ -64,8 +66,23 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 	 * Se non � cancellabile si solleva una eccezione
 	 */
 	@Override
-	public void delete(int idCorso) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement("DELETE from catalogo WHERE id_corso = ?");
+	public void delete(int idCorso) throws SQLException, Exception {
+		try{Corso corsoCheck = select(idCorso);}catch(SQLException se) {
+			throw new IllegalArgumentException("Cannot delete course that doesn't exist.");
+		}
+		
+		PreparedStatement stmt_select = conn.prepareStatement("SELECT id_corso FROM calendario WHERE id_corso = ?");
+		stmt_select.setInt(1, idCorso);
+		ResultSet rs = stmt_select.executeQuery();
+		if(rs.next()){
+			throw new Exception("DELETE operation NOT PERMITTED: past editions exist.");
+		}else{
+			PreparedStatement stmt_delete = conn.prepareStatement("DELETE from catalogo WHERE id_corso = ?");
+			stmt_delete.setInt(1, idCorso);
+			stmt_delete.executeUpdate();
+			
+			
+		}
 		
 		
 	}

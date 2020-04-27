@@ -40,9 +40,9 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 
 	/*
 	 * cancellazione di una edizione presente nel calendario dei corsi
-	 * per cancellare una edizione è necessario prima cancellare le eventuali iscrizioni degli utenti e i feedbacks  
+	 * per cancellare una edizione ï¿½ necessario prima cancellare le eventuali iscrizioni degli utenti e i feedbacks  
 	 * l'edizione viene individuata in base a idEdizione
-	 * se l'edizione non è presente si solleva una eccezione
+	 * se l'edizione non ï¿½ presente si solleva una eccezione
 	 */
 	@Override
 	public void delete(int idEdizione) throws SQLException{
@@ -54,7 +54,7 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	/*
 	 * modifica di tutti i dati di una edizione presente nel calendario dei corsi
 	 * l'edizione viene individuata in base al idEdizione
-	 * se l'edizione non è presente si solleva una eccezione
+	 * se l'edizione non ï¿½ presente si solleva una eccezione
 	 */
 	@Override
 	public void update(Edizione ed) throws SQLException{
@@ -115,7 +115,7 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	/*
 	 * lettura dei dati di una edizione presente nel calendario dei corsi
 	 * l'edizione viene individuata in base al idEdizione
-	 * se l'edizione non è presente si solleva una eccezione
+	 * se l'edizione non ï¿½ presente si solleva una eccezione
 	 */
 	@Override
 	public Edizione selectEdizione(int idEdizione) throws SQLException{
@@ -186,7 +186,7 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 
 	
 	/*
-	 * lettura di tutte le edizioni a cui un certo utente è iscritto o è stato iscritto in passato (vale a dire tutte), presenti nel calendario dei corsi
+	 * lettura di tutte le edizioni a cui un certo utente ï¿½ iscritto o ï¿½ stato iscritto in passato (vale a dire tutte), presenti nel calendario dei corsi
 	 * le edizioni vengono individuate in base al idUtente dell'utente
 	 * se non vi sono edizioni per quell'utente o l'utente non esiste viene ritornata una lista vuota
 	 */
@@ -260,7 +260,7 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	}
 
 	/*
-	 * lettura di tutte le edizioni a cui è iscritto una certo utente, presenti nel calendario dei corsi
+	 * lettura di tutte le edizioni a cui ï¿½ iscritto una certo utente, presenti nel calendario dei corsi
 	 * se future = true, le edizioni lette devono essere solo quelle a partire dalla data in odierna e dell'anno corrente 
 	 * se future = false devono essere lette tutte le edizioni
 	 * le edizioni vengono individuate in base al idUtente
