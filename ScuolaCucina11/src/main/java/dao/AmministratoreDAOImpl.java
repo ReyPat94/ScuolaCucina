@@ -16,10 +16,11 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 
 	private Connection conn;
 
-	public AmministratoreDAOImpl() throws ConnessioneException{
+	public AmministratoreDAOImpl() throws ConnessioneException {
 		conn = SingletonConnection.getInstance();
 	}
 
+	
 
 	/*
 	 * registrazione di un nuovo amministratore.
@@ -59,7 +60,6 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		int n = ps.executeUpdate();
 		if(n==0)
 			throw new SQLException("utente: " + amministratore.getIdUtente() + " non presente");
-
 	}
 
 
@@ -138,7 +138,9 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 	}
 	
 	public static void main(String[] args) throws Exception{
-		AmministratoreDAO dao= new AmministratoreDAOImpl();
+		try(AmministratoreDAO dao= new AmministratoreDAOImpl()) {
+			
+		}
 		Utente u = new Utente("aa","aa","aa","aa", new java.util.Date(),"pp","pp", true);
 //		dao.insert(u);
 //		u.setCognome("Doria");
@@ -151,6 +153,5 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 	@Override
 	public void close() throws IOException {
 		// TODO Auto-generated method stub
-		
 	}
 }
