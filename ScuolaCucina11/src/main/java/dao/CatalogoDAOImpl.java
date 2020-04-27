@@ -47,7 +47,7 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 	public void update(Corso corso) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement(
 				"UPDATE INTO catalogo(titolo, id_categoria, numeroMaxPartecipanti, costo, descrizione) values( ?, ?, ?, ?, ?) WHERE id_corso = ?");
-		ArrayList<Corso> allcourses = select(); // select() to be implement
+		ArrayList<Corso> allcourses = select(); 
 		if (allcourses.contains(corso)) {
 			stmt.setInt(6, corso.getCodice());
 			stmt.setString(1, corso.getTitolo());
@@ -108,14 +108,23 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 	 */
 	@Override
 	public Corso select(int idCorso) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM catalogo WHERE id_corso = ?");
+		pstmt.setInt(1, idCorso);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()){
+			return new Corso(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5), rs.getString(6));
+		}else {
+			throw new IllegalStateException("The course with the ID provided doesn't exist");
+		}
 	}
 
 	@Override
 	public void close() throws IOException {
-		// TODO Auto-generated method stub
-
+		try {
+			conn.close();
+		} catch (SQLException se) {
+			throw new IllegalStateException("Failed to close connection" + se.getMessage());
+		}
 	}
 
 }
