@@ -17,7 +17,7 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 	
 	/*
 	 * registrazione di un nuovo utente alla scuola di formazione 
-	 * se l'utente già esiste si solleva una eccezione
+	 * se l'utente giï¿½ esiste si solleva una eccezione
 	 */
 	@Override
 	public void insert(Utente u) throws SQLException {
@@ -38,8 +38,8 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 
 	/*
 	 * cancellazione di un singolo utente
-	 * l'utente si può cancellare solo se non è correlato ad altri dati
-	 * se l'utente non esiste o non è cancellabile si solleva una eccezione
+	 * l'utente si puï¿½ cancellare solo se non ï¿½ correlato ad altri dati
+	 * se l'utente non esiste o non ï¿½ cancellabile si solleva una eccezione
 	 */
 	@Override
 	public void delete(String idUtente) throws SQLException {
