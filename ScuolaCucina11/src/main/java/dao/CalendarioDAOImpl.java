@@ -56,9 +56,8 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 		PreparedStatement pstmt2 = conn.prepareStatement("DELETE FROM calendario WHERE id_edizione = ?");
 		pstmt2.setInt(1, idEdizione);
 		int rs = pstmt2.executeUpdate();
-		if(rs==0){
-			throw new SQLException("Selected edition to delete DOESN'T EXIST");
-		}	
+		if(rs==0) throw new SQLException("Selected edition to delete DOESN'T EXIST");
+		
 	}
 
 
@@ -76,7 +75,6 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 			ps.setString(4,ed.getDocente());
 			ps.setInt(5, ed.getCodice());
 			int n = ps.executeUpdate();
-//si puo' fare cosi??????
 			if(n==0) throw new SQLException("edizione " + ed.getCodice() + " non presente");
 	}
 

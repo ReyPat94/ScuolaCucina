@@ -121,7 +121,6 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 		} catch (SQLException se) {
 			se.printStackTrace();
 		}
-
 		return results;
 	}
 
