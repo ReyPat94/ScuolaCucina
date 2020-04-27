@@ -19,6 +19,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		conn = SingletonConnection.getInstance();
 	}
 
+	
 
 	/*
 	 * registrazione di un nuovo amministratore.
