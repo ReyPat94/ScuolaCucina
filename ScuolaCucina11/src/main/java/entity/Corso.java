@@ -21,6 +21,16 @@ public class Corso {
 		this.descrizione = descrizione;
 	}
 
+	public Corso(int codice, String titolo, int idCategoria, int maxPartecipanti, double costo, String descrizione) {
+		super();
+		this.codice = codice;
+		this.titolo = titolo;
+		this.idCategoria = idCategoria;
+		this.maxPartecipanti = maxPartecipanti;
+		this.costo = costo;
+		this.descrizione = descrizione;
+	}
+
 	public int getCodice() {
 		return this.codice;
 	}
