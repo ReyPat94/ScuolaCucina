@@ -39,7 +39,7 @@ public class CorsoServiceImpl implements CorsoService {
 	}
 
 	/*
-	 * il metodo mostra l'elenco dei corsi di una certa categorie
+	 * il metodo mostra l'elenco dei corsi di una certa categoria
 	 * se il metodi del/dei DAO invocati sollevano una eccezione, il metodo deve tornare una DAOException con all'interno l'exception originale 
 	 */
 	@Override
