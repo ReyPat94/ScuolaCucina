@@ -17,7 +17,7 @@ public class CorsoServiceImpl implements CorsoService {
 	//dichiarare qui tutti i dao di cui si ha bisogno
 	private CatalogoDAO daoC;
 	//... dichiarazione di altri DAO
-	
+
 	//costruire qui tutti i dao di cui si ha bisogno
 	public  CorsoServiceImpl() throws ConnessioneException{
 		daoC = new CatalogoDAOImpl();
@@ -71,7 +71,7 @@ public class CorsoServiceImpl implements CorsoService {
 	/*
 	 * ritorna un oggetto CorsoDTO con tutti i dati di un singolo corso 
 	 * tutte le edizioni di quel corso con relativi feedbacks (classe EdizioneDTO)
-	 * il corso è individuato tramite idCorso
+	 * il corso ï¿½ individuato tramite idCorso
 	 * se il metodi del/dei DAO invocati sollevano una eccezione, il metodo deve tornare una DAOException con all'interno l'exception originale
 	 */
 	@Override
@@ -82,7 +82,7 @@ public class CorsoServiceImpl implements CorsoService {
 
 	/*
 	 * ritorna una lista con tutti i feedbacks relativi ad un corso 
-	 * il corso è individuato tramite idCorso
+	 * il corso ï¿½ individuato tramite idCorso
 	 * se il metodi del/dei DAO invocati sollevano una eccezione, il metodo deve tornare una DAOException con all'interno l'exception originale
 	 */
 	@Override

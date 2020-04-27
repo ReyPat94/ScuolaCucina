@@ -28,6 +28,17 @@ public class Utente {
 		this.admin = admin;
 	}
 
+	public Utente(String idUtente, String password) {
+		super();
+		this.idUtente = idUtente;
+		this.password = password;
+	}
+	
+	public Utente(String idUtente) {
+		super();
+		this.idUtente = idUtente;
+	}
+
 	public String getIdUtente() {
 		return idUtente;
 	}
