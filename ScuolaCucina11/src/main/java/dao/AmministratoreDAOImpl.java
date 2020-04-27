@@ -16,11 +16,10 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 
 	private Connection conn;
 
-	public AmministratoreDAOImpl() throws ConnessioneException {
+	public AmministratoreDAOImpl() throws ConnessioneException{
 		conn = SingletonConnection.getInstance();
 	}
 
-	
 
 	/*
 	 * registrazione di un nuovo amministratore.
@@ -62,6 +61,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		int n = ps.executeUpdate();
 		if(n==0)
 			throw new SQLException("utente: " + amministratore.getIdUtente() + " non presente");
+
 	}
 
 
@@ -139,6 +139,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		else
 			throw new SQLException("amministratore: " + idAmministratore + " non presente");
 	}
+
 
 
 	@Override
