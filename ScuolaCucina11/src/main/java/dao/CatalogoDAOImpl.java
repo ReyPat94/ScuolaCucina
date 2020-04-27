@@ -36,6 +36,7 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 		stmt.setDouble(5, corso.getCosto());
 		stmt.setString(6, corso.getDescrizione());
 		stmt.executeUpdate();
+		// handle SQLEx
 	}
 
 	/*

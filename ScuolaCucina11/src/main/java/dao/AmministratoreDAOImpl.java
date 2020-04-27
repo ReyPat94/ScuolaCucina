@@ -136,18 +136,6 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		else
 			throw new SQLException("amministratore: " + idAmministratore + " non presente");
 	}
-	
-	public static void main(String[] args) throws Exception{
-		try(AmministratoreDAO dao= new AmministratoreDAOImpl()) {
-			
-		}
-		Utente u = new Utente("aa","aa","aa","aa", new java.util.Date(),"pp","pp", true);
-//		dao.insert(u);
-//		u.setCognome("Doria");
-//		dao.delete("aa");
-//		dao.update(u);
-		System.out.println(dao.select("marco81"));
-	}
 
 
 	@Override
