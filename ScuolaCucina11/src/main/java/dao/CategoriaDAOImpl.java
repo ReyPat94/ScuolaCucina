@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import entity.Categoria;
@@ -90,8 +91,8 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 		
 		ArrayList<Categoria> categorie = new ArrayList<Categoria>();
 		
-		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM categorie");
-		ResultSet rs = stmt.executeQuery();
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM categorie");
 		
 		while (rs.next()) {
 			int id = rs.getInt(1);
