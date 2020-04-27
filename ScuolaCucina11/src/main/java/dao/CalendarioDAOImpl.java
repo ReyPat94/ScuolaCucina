@@ -6,9 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import entity.Edizione;
 import exceptions.ConnessioneException;
-import exceptions.DAOException;
 
 
 
@@ -46,8 +46,18 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	 */
 	@Override
 	public void delete(int idEdizione) throws SQLException{
-		// TODO Auto-generated method stub
-				
+		PreparedStatement pstmt = conn.prepareStatement("DELETE FROM iscritti WHERE id_edizione = ?");
+		pstmt.setInt(1, idEdizione);
+		pstmt.executeUpdate();
+		PreparedStatement pstmt1 = conn.prepareStatement("DELETE FROM feedback WHERE id_edizione = ?");
+		pstmt1.setInt(1, idEdizione);
+		pstmt1.executeUpdate();
+		PreparedStatement pstmt2 = conn.prepareStatement("DELETE FROM calendario WHERE id_edizione = ?");
+		pstmt2.setInt(1, idEdizione);
+		int rs = pstmt2.executeUpdate();
+		if(rs==0){
+			throw new SQLException("Selected edition to delete DOESN'T EXIST");
+		}	
 	}
 
 
@@ -59,16 +69,14 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	@Override
 	public void update(Edizione ed) throws SQLException{
 			PreparedStatement ps=conn.prepareStatement("update calendario set dataInizio=?, durata=?, aula=?, docente=? where id_edizione= ?");
-
 			ps.setDate(1,new java.sql.Date(ed.getDataInizio().getTime()));
 			ps.setInt(2,ed.getDurata());
 			ps.setString(3,ed.getAula());
 			ps.setString(4,ed.getDocente());
 			ps.setInt(5, ed.getCodice());
-
 			int n = ps.executeUpdate();
+//si puo' fare cosi??????
 			if(n==0) throw new SQLException("edizione " + ed.getCodice() + " non presente");
-
 	}
 
 
@@ -79,9 +87,9 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	 */
 	@Override
 	public ArrayList<Edizione> select(int idCaregotia) throws SQLException{
-			ArrayList<Edizione> edizioni=new ArrayList<Edizione>();
+			ArrayList<Edizione> edizioni=new ArrayList<Edizione>(); 
 			PreparedStatement ps=conn.prepareStatement("select * from calendario, catalogo where calendario.id_corso = catalogo.id_corso and id_categoria=?");
-
+														//questa è una join scritta brutta, c'era già
 			ps.setInt(1, idCaregotia);
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()){
@@ -95,12 +103,12 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 				Edizione e=new Edizione(idCorso,dataInizio,durata,aula,docente);
 				e.setCodice(idEdizione);
 
-				long dataM = dataInizio.getTime();
+				long dataM = dataInizio.getTime();				  //brutto
 				long durataM= durata*86400000L;
 				Date dataFine = new Date(dataM+durataM);
 			
 
-				if (dataFine.before(new java.util.Date()))
+				if (dataFine.before(new java.util.Date()))        //controlla se l'edizione è conclusa
 					e.setTerminata(true);	
 
 				edizioni.add(e);
@@ -230,8 +238,16 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	 */
 	@Override
 	public ArrayList<Edizione> select(java.util.Date da, java.util.Date a) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Edizione> result = new ArrayList<>();
+		
+		PreparedStatement pstmt = conn.prepareStatement("Select * FROM calendiario WHERE dataInizio betweeen ? and ?");
+		pstmt.setDate(1, new Date(da.getTime()));
+		pstmt.setDate(1, new Date(a.getTime()));
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()) {
+			result.add(new Edizione(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getInt(4), rs.getString(5), rs.getString(6)));
+		}
+		return result;
 	}
 
 	/*
@@ -243,8 +259,22 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	 */
 	@Override
 	public ArrayList<Edizione> select(int idCaregotia, boolean future) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Edizione> result = new ArrayList<>();
+		PreparedStatement pstmt;
+		if(future) {
+			pstmt = conn.prepareStatement("SELECT * from calendario JOIN catalogo ON(id_corso) WHERE id_categoria = ? and dataInizio > ?");
+			java.util.Date today = new java.util.Date();
+			Date todaySQL = new Date(today.getTime());
+			pstmt.setDate(2, todaySQL);
+		}else {
+			pstmt = conn.prepareStatement("SELECT * from calendario JOIN catalogo ON(id_corso) WHERE id_categoria = ?");	
+		}
+		pstmt.setInt(1, idCaregotia);
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()) {
+		result.add(new Edizione(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getInt(4), rs.getString(5), rs.getString(6)));
+		}
+		return result;
 	}
 
 	/*
@@ -255,8 +285,21 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	 */
 	@Override
 	public ArrayList<Edizione> select(boolean future) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Edizione> result = new ArrayList<>();
+		PreparedStatement pstmt;
+		if(future) {
+			pstmt = conn.prepareStatement("SELECT * from calendario WHERE dataInizio > ?");
+			java.util.Date today = new java.util.Date();
+			Date todaySQL = new Date(today.getTime());
+			pstmt.setDate(1, todaySQL);
+		}else {
+			pstmt = conn.prepareStatement("SELECT * from calendario");	
+		}
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()) {
+			result.add(new Edizione(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getInt(4), rs.getString(5), rs.getString(6)));
+			}
+			return result;
 	}
 
 	/*
@@ -268,7 +311,21 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	 */
 	@Override
 	public ArrayList<Edizione> select(String idUtente, boolean future) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Edizione> result = new ArrayList<>();
+		PreparedStatement pstmt;
+		if(future) {
+			pstmt = conn.prepareStatement("SELECT * from calendario JOIN iscritti ON(id_edizione) WHERE user_id = ? AND dataInizio > ? ");
+			java.util.Date today = new java.util.Date();
+			Date todaySQL = new Date(today.getTime());
+			pstmt.setDate(2, todaySQL);
+		}else{
+			pstmt = conn.prepareStatement("SELECT * from calendario JOIN iscritti ON(id_edizione) WHERE user_id = ?");	
+		}
+		pstmt.setString(1, idUtente);
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()){
+			result.add(new Edizione(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getInt(4), rs.getString(5), rs.getString(6)));
+			}
+		return result;
 	}
 }

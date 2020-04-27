@@ -37,8 +37,8 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 
 	/*
 	 * cancellazione di una singola categoria
-	 * una categoria si può cancellare solo se non ci sono dati correlati
-	 * se la categoria non esiste o non è cancellabile si solleva una eccezione
+	 * una categoria si puï¿½ cancellare solo se non ci sono dati correlati
+	 * se la categoria non esiste o non ï¿½ cancellabile si solleva una eccezione
 	 */
 	@Override
 	public void delete(int idCategoria) throws SQLException {
