@@ -78,8 +78,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 		ps.setString(1, idAmministratore);
 		int n = ps.executeUpdate();
 		if(n==0)
-			throw new SQLException("utente " + idAmministratore + " non presente");
-
+			throw new SQLException("utente " + idAmministratore + " non presente o collegato ad altri dati");
 	}
 
 	/*

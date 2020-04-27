@@ -95,4 +95,5 @@ public class Utente {
 	public String toString(){
 		return "idUtente: " + this.idUtente + "\nPassword: " + this.password + "\nNome: " + this.nome + "\nCognome: " + this.cognome + "\nData di Nascita: " + this.dataNascita + "\nEmail: " + this.email + "\nTelefono: " + this.telefono + "\nAmministratore? " + this.admin;
 	}
+
 }
