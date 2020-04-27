@@ -135,13 +135,15 @@ public class EdizioneServiceImpl implements EdizioneService {
 			java.sql.Date a = java.sql.Date.valueOf(to);
 			
 			ArrayList<Edizione> edizioni = daoC.select(da, a);
+			
 			for (Edizione edizione : edizioni) {
 				ArrayList<Feedback> feedbacks = daoF.selectPerEdizione(edizione.getCodice());
 				ArrayList<Utente> utenti = daoIU.selectUtentiPerEdizione(edizione.getCodice());
+				result.add(new EdizioneDTO(edizione, feedbacks, utenti));
 			}
+						
+			return result;
 			
-			
-			return null;
 		} catch (SQLException se) {
 			throw new DAOException("Metodo fallito", se);
 		}
