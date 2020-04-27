@@ -237,12 +237,12 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 	 * se non vi sono edizioni in quel range di date viene ritornata una lista vuota
 	 */
 	@Override
-	public ArrayList<Edizione> select(java.util.Date da, java.util.Date a) throws SQLException {
+	public ArrayList<Edizione> select(java.sql.Date da, java.sql.Date a) throws SQLException {
 		ArrayList<Edizione> result = new ArrayList<>();
 		
 		PreparedStatement pstmt = conn.prepareStatement("Select * FROM calendiario WHERE dataInizio betweeen ? and ?");
-		pstmt.setDate(1, new Date(da.getTime()));
-		pstmt.setDate(1, new Date(a.getTime()));
+		pstmt.setDate(1, da);
+		pstmt.setDate(1, a);
 		ResultSet rs = pstmt.executeQuery();
 		while(rs.next()) {
 			result.add(new Edizione(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getInt(4), rs.getString(5), rs.getString(6)));
@@ -328,4 +328,26 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 			}
 		return result;
 	}
+
+	/*
+	 * Numero massimo di partecipanti a un'edizione in base al corso a cui l'edizione appartiene
+	 * se la query non viene eseguita ritorna 0	
+	 */
+	@Override
+	public int maxPartecipanti(int idEdizione) throws SQLException {
+		
+		int max = 0;
+		
+		PreparedStatement stmt = conn.prepareStatement("SELECT numeroMaxPartecipanti FROM catalogo "
+				+ "JOIN calendario USING (id_corso) WHERE id_edizione = ?");
+		stmt.setInt(1, idEdizione);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			max = rs.getInt(1);
+		}
+		
+		return max;
+	}
+
+	
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /*
  * rappresenta il carrello di acquisto da parte di un utente 
- * L'utente può acquistare una o più partecipazioni ad una edizione di un corso
+ * L'utente puï¿½ acquistare una o piï¿½ partecipazioni ad una edizione di un corso
  */
 public class Carrello {
 
@@ -13,7 +13,7 @@ public class Carrello {
 
 	/*
 	 * aggiunge una edizione nel carrello
-	 * se l'edizione già è presente nel carrello questa non va aggiuta
+	 * se l'edizione giï¿½ ï¿½ presente nel carrello questa non va aggiunta
 	 */
 	public void aggiungiEdizione (Edizione e){
 		// TODO Auto-generated method stub
@@ -21,7 +21,7 @@ public class Carrello {
 
 	/*
 	 * elimina una edizione nel carrello
-	 * se l'edizione non è presente nel carrello NON si sollava una eccezione
+	 * se l'edizione non ï¿½ presente nel carrello NON si sollava una eccezione
 	 */
 	public void rimuoviEdizione(Edizione e){
 		// TODO Auto-generated method stub

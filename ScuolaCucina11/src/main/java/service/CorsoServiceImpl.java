@@ -34,7 +34,6 @@ public class CorsoServiceImpl implements CorsoService {
 			return daoC.select();
 		} catch (SQLException e) {
 			throw new DAOException("errore nel recuperare o leggere i dati", e);
-			
 		}
 	}
 
@@ -71,7 +70,7 @@ public class CorsoServiceImpl implements CorsoService {
 	/*
 	 * ritorna un oggetto CorsoDTO con tutti i dati di un singolo corso 
 	 * tutte le edizioni di quel corso con relativi feedbacks (classe EdizioneDTO)
-	 * il corso è individuato tramite idCorso
+	 * il corso ï¿½ individuato tramite idCorso
 	 * se il metodi del/dei DAO invocati sollevano una eccezione, il metodo deve tornare una DAOException con all'interno l'exception originale
 	 */
 	@Override
@@ -82,7 +81,7 @@ public class CorsoServiceImpl implements CorsoService {
 
 	/*
 	 * ritorna una lista con tutti i feedbacks relativi ad un corso 
-	 * il corso è individuato tramite idCorso
+	 * il corso ï¿½ individuato tramite idCorso
 	 * se il metodi del/dei DAO invocati sollevano una eccezione, il metodo deve tornare una DAOException con all'interno l'exception originale
 	 */
 	@Override
