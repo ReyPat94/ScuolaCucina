@@ -47,7 +47,7 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 	public void update(Corso corso) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement(
 				"UPDATE INTO catalogo(titolo, id_categoria, numeroMaxPartecipanti, costo, descrizione) values( ?, ?, ?, ?, ?) WHERE id_corso = ?");
-		ArrayList<Corso> allcourses = select(); 
+		ArrayList<Corso> allcourses = select();
 		if (allcourses.contains(corso)) {
 			stmt.setInt(6, corso.getCodice());
 			stmt.setString(1, corso.getTitolo());
@@ -56,7 +56,7 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 			stmt.setDouble(4, corso.getCosto());
 			stmt.setString(5, corso.getDescrizione());
 		} else {
-			throw new IllegalArgumentException("Il corso che vuoi UPDATE non esiste.");
+			throw new SQLException("Il corso che vuoi UPDATE non esiste.");
 		}
 	}
 
@@ -71,7 +71,7 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 		try {
 			Corso corsoCheck = select(idCorso);
 		} catch (SQLException se) {
-			throw new IllegalArgumentException("Cannot delete course that doesn't exist." + se.getMessage());
+			throw new SQLException("Cannot delete course that doesn't exist." + se.getMessage());
 		}
 		PreparedStatement stmt_select = conn.prepareStatement("SELECT id_corso FROM calendario WHERE id_corso = ?");
 		stmt_select.setInt(1, idCorso);
@@ -95,8 +95,9 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 		PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM catalogo");
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<Corso> result = new ArrayList<>();
-		while(rs.next()){
-			Corso corso = new Corso(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5), rs.getString(6));
+		while (rs.next()) {
+			Corso corso = new Corso(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5),
+					rs.getString(6));
 			result.add(corso);
 		}
 		return result;
@@ -111,10 +112,11 @@ public class CatalogoDAOImpl implements CatalogoDAO {
 		PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM catalogo WHERE id_corso = ?");
 		pstmt.setInt(1, idCorso);
 		ResultSet rs = pstmt.executeQuery();
-		if(rs.next()){
-			return new Corso(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5), rs.getString(6));
-		}else {
-			throw new IllegalStateException("The course with the ID provided doesn't exist");
+		if (rs.next()) {
+			return new Corso(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getDouble(5),
+					rs.getString(6));
+		} else {
+			throw new SQLException("The course with the ID provided doesn't exist");
 		}
 	}
 

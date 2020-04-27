@@ -103,7 +103,7 @@ ALTER TABLE `cucina`.`calendario` ADD INDEX delCorso (id_corso );
 CREATE TABLE `catalogo` 
 (
 	`id_corso` integer (11) NOT NULL AUTO_INCREMENT , 
-	`titolo` varchar (50), 
+	`titolo` unique varchar (50), 
 	`id_categoria` integer (11), 
 	`numeroMaxPartecipanti` integer (11), 
 	`costo` double (13,2), 
