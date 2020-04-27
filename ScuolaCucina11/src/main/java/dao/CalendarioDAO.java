@@ -22,6 +22,5 @@ public interface CalendarioDAO {
 	ArrayList<Edizione> select(String idUtente) throws SQLException;
 	ArrayList<Edizione> select(String idUtente, boolean future) throws SQLException;
 	int maxPartecipanti(int idEdizione) throws SQLException;
-	
-
+	ArrayList<Edizione> selectByCorso(int idCorso) throws SQLException;	
 }

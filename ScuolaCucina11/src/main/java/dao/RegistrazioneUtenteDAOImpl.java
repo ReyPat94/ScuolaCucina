@@ -30,6 +30,7 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 		conn = SingletonConnection.getInstance();
 	}
 
+	
 	/*
 	 * registrazione di un nuovo utente alla scuola di formazione se l'utente gi�
 	 * esiste si solleva una eccezione
@@ -108,8 +109,8 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 	 * metodo ritorna una lista vuota
 	 */
 	@Override
-	public List<Utente> select() throws SQLException {
-		List<Utente> results = new ArrayList<>();
+	public ArrayList<Utente> select() throws SQLException {
+		ArrayList<Utente> results = new ArrayList<>();
 
 		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(GET_ALL)) {
 			while (rs.next()) {
@@ -121,7 +122,6 @@ public class RegistrazioneUtenteDAOImpl implements RegistrazioneUtenteDAO {
 		} catch (SQLException se) {
 			se.printStackTrace();
 		}
-
 		return results;
 	}
 

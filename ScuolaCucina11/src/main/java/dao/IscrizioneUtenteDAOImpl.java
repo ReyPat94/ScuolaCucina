@@ -84,8 +84,8 @@ public class IscrizioneUtenteDAOImpl implements IscrizioneUtenteDAO {
 	 * se l'utente non esiste o non � iscritto a nessuna edizione si torna una lista vuota
 	 */
 	@Override
-	public List<Edizione> selectIscrizioniUtente(String idUtente) throws SQLException {
-		List<Edizione> results = new ArrayList<>();
+	public ArrayList<Edizione> selectIscrizioniUtente(String idUtente) throws SQLException {
+		ArrayList<Edizione> results = new ArrayList<>();
 
 		try (PreparedStatement prepStmt = conn.prepareStatement(GET_UTENTE_EDIZIONI)) {
 			prepStmt.setString(1, idUtente);
@@ -109,8 +109,8 @@ public class IscrizioneUtenteDAOImpl implements IscrizioneUtenteDAO {
 	 * se l'edizione non esiste o non vi sono utenti iscritti si torna una lista vuota
 	 */
 	@Override
-	public List<Utente> selectUtentiPerEdizione(int idEdizione) throws SQLException {
-		List<Utente> results = new ArrayList<>();
+	public ArrayList<Utente> selectUtentiPerEdizione(int idEdizione) throws SQLException {
+		ArrayList<Utente> results = new ArrayList<>();
 
 		try (PreparedStatement prepStmt = conn.prepareStatement(GET_EDIZIONE_UTENTI)) {
 			prepStmt.setInt(1, idEdizione);

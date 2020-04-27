@@ -14,19 +14,19 @@ import exceptions.DAOException;
 
 public class UtenteServiceImpl implements UtenteService {
 
-	//dichiarare qui tutti i dao di cui si ha bisogno
+	// dichiarare qui tutti i dao di cui si ha bisogno
 	private RegistrazioneUtenteDAO daoU;
-	//... dichiarazione di altri eventuali DAO
-	
-	//costruire qui tutti i dao di cui si ha bisogno
-	public  UtenteServiceImpl() throws ConnessioneException{
+	// ... dichiarazione di altri eventuali DAO
+
+	// costruire qui tutti i dao di cui si ha bisogno
+	public UtenteServiceImpl() throws ConnessioneException {
 		daoU = new RegistrazioneUtenteDAOImpl();
-		//... costruzione dei altri eventuali dao
+		// ... costruzione dei altri eventuali dao
 	}
-	
+
 	/*
-	 * registrazione nel sistema di un nuovo utente
-	 * Se l'utente è già presente si solleva una eccezione
+	 * registrazione nel sistema di un nuovo utente Se l'utente ï¿½ giï¿½ presente si
+	 * solleva una eccezione
 	 */
 	@Override
 	public void registrazioneUtente(Utente u) throws DAOException {
@@ -35,85 +35,106 @@ public class UtenteServiceImpl implements UtenteService {
 		} catch (SQLException e) {
 			throw new DAOException("impossibile inserire l'utente", e);
 		}
-		
+
 	}
 
 	/*
-	 * controllo della presenza di un utente in base a idUtente e password
-	 * Se l'utente è presente viene recuperato e ritornato
-	 * Se l'utente non è presente si solleva una eccezione
+	 * controllo della presenza di un utente in base a idUtente e password Se
+	 * l'utente ï¿½ presente viene recuperato e ritornato Se l'utente non ï¿½ presente
+	 * si solleva una eccezione
 	 */
 	@Override
 	public Utente checkCredenziali(String idUtente, String psw) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		Utente u = new Utente(idUtente, psw);
+		Utente result;
+		try {
+			result = daoU.select(u);
+			if(result.getPassword().equals(u.getPassword())) {
+				return result;
+			}
+		} catch (SQLException e) {
+			throw new DAOException("User doesn't exit", e);
+		}
+		return result;  //useless
 	}
 
 	/*
-	 * cancellazione di un utente dal sistema
-	 * l'utente è cancellabile solo se non vi sono dati correlati.
-	 * (ad esempio, non è (o è stato) iscritto a nessuna edizione)
-	 * se l'utente non è cancellabile si solleva una eccezione
+	 * cancellazione di un utente dal sistema l'utente ï¿½ cancellabile solo se non vi
+	 * sono dati correlati. (ad esempio, non ï¿½ (o ï¿½ stato) iscritto a nessuna
+	 * edizione) se l'utente non ï¿½ cancellabile si solleva una eccezione
 	 * 
 	 */
 	@Override
 	public void cancellaRegistrazioneUtente(String idUtente) throws DAOException {
-		// TODO Auto-generated method stub
+		Utente u = new Utente(idUtente);
+		try {daoU.delete(u);
+		}catch(SQLException se) {
+			throw new DAOException("Utente non cancellabile", se);
+		}
 		
 	}
 
 	/*
-	 * modifica tutti i dati di un utente 
-	 * l'utente viene individuato in base a idUtente
-	 * se l'utente non è presente si solleva una eccezione
+	 * modifica tutti i dati di un utente l'utente viene individuato in base a
+	 * idUtente se l'utente non ï¿½ presente si solleva una eccezione
 	 */
 	@Override
 	public void modificaDatiUtente(Utente u) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			daoU.update(u);
+		} catch (SQLException e){
+			throw new DAOException("Can't update user because user doesn't exist", e);
+		}
 	}
 
 	/*
-	 * legge tutti gli utenti registrati sul sistema
-	 * se non vi sono utenti il metodo ritorna una lista vuota
+	 * legge tutti gli utenti registrati sul sistema se non vi sono utenti il metodo
+	 * ritorna una lista vuota
 	 */
 	@Override
 	public ArrayList<Utente> visualizzaUtentiRegistrati() throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			ArrayList<Utente> result = daoU.select();
+		}catch(SQLException e){
+			throw new DAOException("Can't get users", e);
+		}
+		return result;
 	}
 
 	/*
-	 * inserisce un feedback per una certa edizione
-	 * Un utente può inserire un feedback solo per i corsi già frequentati (e terminati) e solo se non lo ha già fatto in precedenza (un solo feedback ad utente per edizione)
-	 * se l'utente non può insierire un feedback si solleva una eccezione
+	 * inserisce un feedback per una certa edizione Un utente puï¿½ inserire un
+	 * feedback solo per i corsi giï¿½ frequentati (e terminati) e solo se non lo ha
+	 * giï¿½ fatto in precedenza (un solo feedback ad utente per edizione) se l'utente
+	 * non puï¿½ insierire un feedback si solleva una eccezione
 	 */
 	@Override
 	public void inserisciFeedback(Feedback f) throws DAOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/*
-	 * modifica della descrizione e/o del voto di un feedback
-	 * il feedback è modificabile solo da parte dell'utente che lo ha inserito e solo entro un mese dal termine della edizione del corso
-	 * se l'utente non può modificare un feedback si solleva una eccezione
+	 * modifica della descrizione e/o del voto di un feedback il feedback ï¿½
+	 * modificabile solo da parte dell'utente che lo ha inserito e solo entro un
+	 * mese dal termine della edizione del corso se l'utente non puï¿½ modificare un
+	 * feedback si solleva una eccezione
 	 */
 	@Override
 	public void modificaFeedback(Feedback feedback) throws DAOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/*
-	 * eliminazione di un feedback
-	 * il feedback è cancellabile solo da parte dell'utente che lo ha inserito e solo entro un mese dal termine della edizione del corso
-	 * se l'utente non può cancellare un feedback si solleva una eccezione
+	 * eliminazione di un feedback il feedback ï¿½ cancellabile solo da parte
+	 * dell'utente che lo ha inserito e solo entro un mese dal termine della
+	 * edizione del corso se l'utente non puï¿½ cancellare un feedback si solleva una
+	 * eccezione
 	 */
 	@Override
 	public void cancellaFeedback(int idFeedback) throws DAOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
