@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import dto.EdizioneDTO;
 import entity.Edizione;
-import entity.Feedback;
-import entity.Utente;
 import exceptions.DAOException;
 
 public interface EdizioneService {
