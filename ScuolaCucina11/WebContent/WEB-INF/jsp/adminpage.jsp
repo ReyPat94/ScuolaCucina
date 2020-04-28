@@ -7,11 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div>Hweilà, bienvenido amigo!</div>
+<div>Hweilà, bienvenido administrador!</div>
+
 
 <a href=""><button>Logout</button></a>
-<a href=""><button>I miei corsi</button></a>
-<a href=""><button>Catalogo</button></a>
-<a href=""><button>Modifica dati utente</button></a>
+
+<a href=""><button>Modifica dati administrador</button></a>
+
+<a href=""><button>Database</button></a>
+
+
+
 </body>
 </html>
