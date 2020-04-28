@@ -10,6 +10,17 @@ public class Feedback {
 	
 	public Feedback(){}
 	
+	
+	
+	public Feedback(int idFeedback, String descrizione, int voto, int idEdizione, String idUtente) {
+		super();
+		this.idFeedback = idFeedback;
+		this.descrizione = descrizione;
+		this.voto = voto;
+		this.idEdizione = idEdizione;
+		this.idUtente = idUtente;
+	}
+
 	public Feedback(int idEdizione, String idUtente, String descrizione, int voto) {
 		this.descrizione = descrizione;
 		this.voto = voto;
@@ -22,6 +33,7 @@ public class Feedback {
 		this.voto = voto;
 		this.idUtente=idUtente;
 	}
+	
 	
 	public int getIdEdizione() {
 		return idEdizione;
