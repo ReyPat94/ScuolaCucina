@@ -9,6 +9,7 @@
 
 <body>
 
+
 <h1> Benvenuto in Scuola Cucina11!</h1>
 
 <button type='button'>LOGIN</button>
@@ -16,6 +17,7 @@
 
 
 <%-- <jsp:include page="registraUtente.jsp"/> --%>
+
 
 </body>
 </html>
