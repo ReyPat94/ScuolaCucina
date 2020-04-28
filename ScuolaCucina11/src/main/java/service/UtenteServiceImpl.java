@@ -159,11 +159,9 @@ public class UtenteServiceImpl implements UtenteService {
 	public void modificaFeedback(Feedback feedback) throws DAOException {
 		String utente = feedback.getIdUtente();
 		int edizioneid = feedback.getIdEdizione();
-
 		try {
 			Feedback oldFeedback = daoF.selectSingoloFeedback(utente, edizioneid);
 			Edizione edizione = daoC.selectEdizione(edizioneid);
-
 			// trovando la data limite per modifica feedback
 			long dataM = edizione.getDataInizio().getTime();
 			long durataM = edizione.getDurata() * 86400000L;
@@ -171,11 +169,9 @@ public class UtenteServiceImpl implements UtenteService {
 			Date dataLimite = new Date(dataM + durataM + mese); // aggiunge il mese
 			// data di oggi (giorno in cui viene modificato il feedback)
 			java.util.Date d = new java.util.Date();
-
-			if (dataLimite.after(d)) {
+			if (dataLimite.after(d)){
 				Feedback newFeedback = new Feedback(oldFeedback.getIdFeedback(), feedback.getDescrizione(),
 						oldFeedback.getVoto(), oldFeedback.getIdEdizione(), utente);
-
 				daoF.update(newFeedback);
 			}
 		} catch (SQLException e) {
@@ -191,11 +187,9 @@ public class UtenteServiceImpl implements UtenteService {
 	 */
 	@Override
 	public void cancellaFeedback(int idFeedback, int idUtente) throws DAOException {
-		
 		try {
 			Feedback feedback = daoF.getFeedbackByID(idFeedback);
 			Edizione edizione = daoC.selectEdizione(feedback.getIdEdizione());
-
 			// trovando la data limite per modifica feedback
 			long dataM = edizione.getDataInizio().getTime();
 			long durataM = edizione.getDurata() * 86400000L;
@@ -203,12 +197,9 @@ public class UtenteServiceImpl implements UtenteService {
 			Date dataLimite = new Date(dataM + durataM + mese); // aggiunge il mese
 			// data di oggi (giorno in cui viene modificato il feedback)
 			java.util.Date d = new java.util.Date();
-
 			if (dataLimite.after(d)) {
 				daoF.delete(idFeedback);
 			}
-	
-		
 		}catch (SQLException e) {
 			throw new DAOException("FeedbackId non esiste o edizione non esiste o feedback non può essere eliminato", e);
 		}
