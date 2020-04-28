@@ -130,6 +130,21 @@ public class FeedBackDAOImpl implements FeedbackDAO {
 
 		return feedbacks;
 	}
+	
+	@Override
+	public Feedback getFeedbackByID(int feedbackID) throws SQLException {
+
+		Feedback feedback = new Feedback();
+
+		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM feedback WHERE id_feedback = ?");
+		stmt.setInt(1, feedbackID);
+		ResultSet rs = stmt.executeQuery();
+
+		feedback = new Feedback(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+
+		return feedback;
+		
+	}
 
 	/*
 	 * lettura di tutti i feedback scritti da un certo utente se non ci sono
