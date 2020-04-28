@@ -4,10 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Scuola Cucina11</title>
 </head>
+
 <body>
 
-<jsp:include page="registraUtente.jsp"/>
+<h1> Benvenuto in Scuola Cucina11!</h1>
+
+<button type='button'>LOGIN</button>
+
+
+
+<%-- <jsp:include page="registraUtente.jsp"/> --%>
+
 </body>
 </html>
