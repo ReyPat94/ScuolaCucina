@@ -16,7 +16,7 @@
 
 
 
-<%-- <jsp:include page="registraUtente.jsp"/> --%>
+<jsp:include page="registraUtente.jsp"/>
 
 
 </body>

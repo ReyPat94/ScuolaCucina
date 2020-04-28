@@ -54,7 +54,6 @@
 							</c:forEach>				
 						</select> </td></tr>
 
-			
 		<tr height="50">
 		    <td width="20%">Anno di nascita</td>
 			<td width="40%"><input type="text" name="anno"></td> 
