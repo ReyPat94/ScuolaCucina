@@ -126,39 +126,59 @@ public class EdizioneServiceImpl implements EdizioneService {
 	public ArrayList<EdizioneDTO> visualizzaEdizioniPerMese(int mese) throws DAOException {
 
 		try {
-			
+
 			ArrayList<EdizioneDTO> result = new ArrayList<EdizioneDTO>();
 			LocalDate today = LocalDate.now();
 			LocalDate from = today.withMonth(mese).withDayOfMonth(1);
 			LocalDate to = from.with(TemporalAdjusters.lastDayOfMonth());
 			java.sql.Date da = java.sql.Date.valueOf(from);
 			java.sql.Date a = java.sql.Date.valueOf(to);
-			
+
 			ArrayList<Edizione> edizioni = daoC.select(da, a);
-			
+
 			for (Edizione edizione : edizioni) {
 				ArrayList<Feedback> feedbacks = daoF.selectPerEdizione(edizione.getCodice());
 				ArrayList<Utente> utenti = daoIU.selectUtentiPerEdizione(edizione.getCodice());
 				result.add(new EdizioneDTO(edizione, feedbacks, utenti));
 			}
-						
+
 			return result;
-			
+
 		} catch (SQLException se) {
 			throw new DAOException("Metodo fallito", se);
 		}
 	}
 
 	/*
-	 * il metodo ritorna tutte le edizioni con relativi utenti e feedback dei corsi
-	 * in calendario nel mese indicato dell'anno corrente se il metodi del/dei DAO
-	 * invocati sollevano una eccezione, il metodo deve tornare una DAOException con
-	 * all'interno l'exception originale
+	 * il metodo ritorna tutte le edizioni con relativi utenti e feedback del corso
+	 * specificato presenti in calendario nell'anno corrente a partire dalla data
+	 * odierna se il metodi del/dei DAO invocati sollevano una eccezione, il metodo
+	 * deve tornare una DAOException con all'interno l'exception originale
 	 */
 	@Override
 	public ArrayList<EdizioneDTO> visualizzaEdizioniPerAnno(int anno) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+
+		try {
+
+			ArrayList<EdizioneDTO> result = new ArrayList<EdizioneDTO>();
+			LocalDate from = LocalDate.now();
+			LocalDate to = LocalDate.of(anno, 12, 31);
+			java.sql.Date da = java.sql.Date.valueOf(from);
+			java.sql.Date a = java.sql.Date.valueOf(to);
+
+			ArrayList<Edizione> edizioni = daoC.select(da, a);
+
+			for (Edizione edizione : edizioni) {
+				ArrayList<Feedback> feedbacks = daoF.selectPerEdizione(edizione.getCodice());
+				ArrayList<Utente> utenti = daoIU.selectUtentiPerEdizione(edizione.getCodice());
+				result.add(new EdizioneDTO(edizione, feedbacks, utenti));
+			}
+
+			return result;
+
+		} catch (SQLException se) {
+			throw new DAOException("Metodo fallito", se);
+		}
 	}
 
 	/*
@@ -169,8 +189,24 @@ public class EdizioneServiceImpl implements EdizioneService {
 	 */
 	@Override
 	public ArrayList<EdizioneDTO> visualizzaEdizioniPerCorso(int idCorso) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		try {
+
+			ArrayList<EdizioneDTO> result = new ArrayList<EdizioneDTO>();
+
+			ArrayList<Edizione> edizioni = daoC.selectByCorso(idCorso);
+
+			for (Edizione edizione : edizioni) {
+				ArrayList<Feedback> feedbacks = daoF.selectPerEdizione(edizione.getCodice());
+				ArrayList<Utente> utenti = daoIU.selectUtentiPerEdizione(edizione.getCodice());
+				result.add(new EdizioneDTO(edizione, feedbacks, utenti));
+			}
+
+			return result;
+
+		} catch (SQLException se) {
+			throw new DAOException("Metodo fallito", se);
+		}
 	}
 
 	/*
@@ -181,8 +217,19 @@ public class EdizioneServiceImpl implements EdizioneService {
 	 */
 	@Override
 	public EdizioneDTO visualizzaEdizione(int idEdizione) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		try {
+			
+		Edizione edizione = daoC.selectEdizione(idEdizione);
+		ArrayList<Feedback> feedbacks = daoF.selectPerEdizione(idEdizione);
+		ArrayList<Utente> utenti = daoIU.selectUtentiPerEdizione(idEdizione);
+		
+		return new EdizioneDTO(edizione, feedbacks, utenti);
+		
+		} catch (SQLException se) {
+			throw new DAOException("Metodo fallito", se);
+		}
+
 	}
 
 }
