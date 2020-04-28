@@ -15,6 +15,6 @@ public interface UtenteService {
 	ArrayList<Utente> visualizzaUtentiRegistrati() throws DAOException;
 	void inserisciFeedback(Feedback f) throws DAOException;
 	void modificaFeedback(Feedback feedback) throws DAOException;
-	void cancellaFeedback(int idFeedback)throws DAOException;
+	void cancellaFeedback(int idFeedback,int idUtente)throws DAOException;
 	
 }
